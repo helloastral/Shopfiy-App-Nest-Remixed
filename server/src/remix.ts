@@ -4,6 +4,7 @@ import * as url from 'url'
 import { RequestHandler, createRequestHandler } from '@remix-run/express'
 import { broadcastDevReady, installGlobals } from '@remix-run/node'
 import * as sourceMapSupport from 'source-map-support'
+import { ShopifyApp } from '@shopify/shopify-app-express'
 
 sourceMapSupport.install({
   retrieveSourceMap: function (source) {
@@ -72,7 +73,7 @@ async function createDevRequestHandler(initialBuild) {
   }
 }
 
-async function getRemixHandler() {
+async function getRemixHandler(shopify: ShopifyApp) {
   const remixBuild = await reimportServer()
   const remixHandler = isDev
     ? await createDevRequestHandler(remixBuild)
@@ -88,7 +89,10 @@ async function getRemixHandler() {
       return next()
     }
 
-    return remixHandler(req, res, next)
+    const customNextFn = () => {
+      return remixHandler(req, res, next)
+    }
+    return shopify.ensureInstalledOnShop()(req, res, customNextFn)
   }
 
   return handler

@@ -1,10 +1,17 @@
 import { Module } from '@nestjs/common'
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
+import { ConfigModule } from '@nestjs/config'
+import { SharedModule } from './shared/shared.module'
+import { WebhooksModule } from './modules/webhooks/webhooks.module'
+import { ProductModule } from './modules/product/product.module'
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot(),
+    SharedModule,
+    WebhooksModule,
+    ProductModule,
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "yarn workspace remix dev --manual -c \"yarn workspace server start:dev\"",
     "remix:build": "yarn workspace remix build",
-    "server:dev": "yarn workspace server start:dev"
+    "server:dev": "yarn workspace server start:dev",
+    "migrate:dev": "yarn workspace server prisma migrate dev"
   },
   "workspaces": [
     "server",
