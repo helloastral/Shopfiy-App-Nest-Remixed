@@ -14,10 +14,6 @@ async function bootstrap() {
   app.setGlobalPrefix('api')
   app.enableCors()
 
-  app.use(
-    '/api/*',
-    unless('/api/webhooks', shopify.validateAuthenticatedSession()),
-  )
   app
     .use('/api/webhooks', expressJs.text({ type: '*/*' }))
     .use(expressJs.json({ limit: '50mb' }))
@@ -32,6 +28,11 @@ async function bootstrap() {
     shopify.config.auth.callbackPath,
     shopify.auth.callback(),
     shopify.redirectToShopifyOrAppRoot(),
+  )
+
+  express.use(
+    '/api/*',
+    unless('/api/webhooks', shopify.validateAuthenticatedSession()),
   )
 
   express.all('*', await getRemixHandler(shopify))

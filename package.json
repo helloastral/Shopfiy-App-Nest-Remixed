@@ -5,7 +5,13 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "yarn workspace remix dev --manual -c \"yarn workspace server start:dev\"",
+    "app:dev": "yarn workspace remix dev --manual -c \"yarn workspace server start:dev\"",
+    "shopify": "shopify",
+    "build": "shopify app build",
+    "dev": "shopify app dev",
+    "info": "shopify app info",
+    "generate": "shopify app generate",
+    "deploy": "shopify app deploy",
     "remix:build": "yarn workspace remix build",
     "server:dev": "yarn workspace server start:dev",
     "migrate:dev": "yarn workspace server prisma migrate dev"
@@ -13,5 +19,9 @@
   "workspaces": [
     "server",
     "remix"
-  ]
+  ],
+  "dependencies": {
+    "@shopify/app": "^3.53.0",
+    "@shopify/cli": "^3.53.0"
+  }
 }

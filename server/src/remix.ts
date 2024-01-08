@@ -92,6 +92,12 @@ async function getRemixHandler(shopify: ShopifyApp) {
     const customNextFn = () => {
       return remixHandler(req, res, next)
     }
+
+    // Remix ping endpoint
+    if (req.originalUrl.startsWith('/ping')) {
+      return customNextFn()
+    }
+
     return shopify.ensureInstalledOnShop()(req, res, customNextFn)
   }
 

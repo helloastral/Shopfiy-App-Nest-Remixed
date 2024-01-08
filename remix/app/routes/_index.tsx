@@ -10,7 +10,8 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader() {
-  const res = await fetch("http://localhost:3000/api");
+  const host = process.env.HOST;
+  const res = await fetch(`${host}/api`);
   const data = await res.text();
 
   return { hello: data };
