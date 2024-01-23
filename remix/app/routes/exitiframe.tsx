@@ -36,6 +36,8 @@ export default function ExitIframe() {
       </Layout>
     </Page>
   ) : (
-    <Spinner />
+    <div style={{display:"grid", placeItems:"center",height:"100dvh"}}>
+      <Spinner />
+      </div>
   );
 }
