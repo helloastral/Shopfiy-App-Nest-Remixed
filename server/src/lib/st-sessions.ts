@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from '@prisma/client'
+import { AppSession, Prisma, PrismaClient } from '@prisma/client'
 import { Session } from '@shopify/shopify-api'
 import { SessionStorage } from '@shopify/shopify-app-session-storage'
 
@@ -34,6 +34,24 @@ export class STSessionStorage implements SessionStorage {
         where: { id: id },
       })
 
+      return await this.loadSessionFromData(data)
+    } catch (err) {
+      return undefined
+    }
+  }
+  async getSessionFromShopName(shopName: string) {
+    try {
+      const data = await this.prisma.appSession.findFirst({
+        where: { shop: shopName },
+      })
+
+      return await this.loadSessionFromData(data)
+    } catch (err) {
+      return undefined
+    }
+  }
+  async loadSessionFromData(data: AppSession): Promise<Session> {
+    try {
       if (!data) {
         return undefined
       }

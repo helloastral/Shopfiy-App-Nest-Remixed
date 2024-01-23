@@ -31,3 +31,5 @@ const shopify = shopifyApp({
 })
 
 export default shopify
+
+export type ShopifyApp = typeof shopify

@@ -2,18 +2,19 @@
 
 name = "gst-starter"
 client_id = "c00a5c3a5ce1572b5e4fd98f8b266d03"
-application_url = "https://packages-flag-immigrants-recorder.trycloudflare.com"
+application_url = "https://andreas-call-competitions-gates.trycloudflare.com"
 embedded = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_products"
 use_legacy_install_flow = true
 
 [auth]
 redirect_urls = [
-  "https://packages-flag-immigrants-recorder.trycloudflare.com/auth/callback",
-  "https://packages-flag-immigrants-recorder.trycloudflare.com/auth/shopify/callback",
-  "https://packages-flag-immigrants-recorder.trycloudflare.com/api/auth/callback"
+  "https://andreas-call-competitions-gates.trycloudflare.com/auth/callback",
+  "https://andreas-call-competitions-gates.trycloudflare.com/auth/shopify/callback",
+  "https://andreas-call-competitions-gates.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

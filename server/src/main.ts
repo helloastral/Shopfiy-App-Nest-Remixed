@@ -6,6 +6,7 @@ import * as serveStatic from 'serve-static'
 import shopify from './lib/shopify-app'
 import { unless } from './lib/utils'
 import * as expressJs from 'express'
+import validateShopify from './lib/shopify-validate.middleware'
 
 const PORT = parseInt(process.env.PORT || '3000', 10)
 
@@ -30,10 +31,7 @@ async function bootstrap() {
     shopify.redirectToShopifyOrAppRoot(),
   )
 
-  express.use(
-    '/api/*',
-    unless('/api/webhooks', shopify.validateAuthenticatedSession()),
-  )
+  express.use('/api/*', unless('/api/webhooks', validateShopify(shopify)))
 
   express.all('*', await getRemixHandler(shopify))
 

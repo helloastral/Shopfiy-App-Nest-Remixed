@@ -1,38 +1,35 @@
-import { type MetaFunction } from "@remix-run/node";
+import { LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { useState } from "react";
+import { Page, BlockStack, Layout, Card, Button } from "@shopify/polaris";
+import { getApi } from "../libs/api.server";
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
-};
-
-export async function loader() {
+export async function loader({ request }: LoaderFunctionArgs) {
+  const api = await getApi(request);
   const host = process.env.HOST;
-  const res = await fetch(`${host}/api`);
-  const data = await res.text();
+  const res = await api.get(`${host}/api/products`);
 
-  return { hello: data };
+  console.log(res.data);
+
+  return { products: res.data };
 }
 
-export default function Index() {
-  const [count, setCount] = useState(1);
-  const helloData = useLoaderData();
+export default function MainPage() {
+  const { products } = useLoaderData<typeof loader>();
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h1>Welcome to Nest Remixed!</h1>
-      <ul>
-        <li>All /api routes go to Nest js</li>
-        <li>All /build and /assets is served by nest from /remix/public</li>
-        <li>All other routes go to Remix</li>
-      </ul>
-      <p>{JSON.stringify(helloData)}</p>
-      <p>
-        <button onClick={() => setCount(count + 1)}>Count {count}</button>
-      </p>
-    </div>
+    <Page>
+      <ui-title-bar title="Remix app template">Generate a product</ui-title-bar>
+      <BlockStack gap="500">
+        <Layout>
+          <Layout.Section>
+            <Card>
+              <h2>Hello</h2>
+              <Button>Hello</Button>
+              <p>{JSON.stringify(products, null, 2)}</p>
+            </Card>
+          </Layout.Section>
+        </Layout>
+      </BlockStack>
+    </Page>
   );
 }

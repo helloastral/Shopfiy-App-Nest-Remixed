@@ -1,5 +1,9 @@
-type="backend"
+name = "remix"
+roles = ["frontend", "backend"]
+webhooks_path = "/webhooks"
 
 [commands]
 dev = "yarn app:dev"
-build = "yarn build"
+
+[hmr_server]
+http_paths = ["/ping"]

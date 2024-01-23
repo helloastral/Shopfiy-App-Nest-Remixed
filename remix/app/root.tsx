@@ -1,15 +1,21 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
 import type { LinksFunction } from "@remix-run/node";
 import {
+  Link,
   Links,
   LiveReload,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  json,
+  useLoaderData,
 } from "@remix-run/react";
+import { AppProvider } from "@shopify/shopify-app-remix/react";
+import polarisStyles from "@shopify/polaris/build/esm/styles.css";
 
 export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: polarisStyles },
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
   {
     rel: "icon",
@@ -18,7 +24,13 @@ export const links: LinksFunction = () => [
   },
 ];
 
+export const loader = async () => {
+  return json({ apiKey: process.env.SHOPIFY_API_KEY || "" });
+};
+
 export default function App() {
+  const { apiKey } = useLoaderData<typeof loader>();
+
   return (
     <html lang="en">
       <head>
@@ -28,7 +40,15 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <AppProvider isEmbeddedApp apiKey={apiKey}>
+          <ui-nav-menu>
+            <Link to="/app" rel="home">
+              Home
+            </Link>
+            <Link to="/app/additional">Additional page</Link>
+          </ui-nav-menu>
+          <Outlet />
+        </AppProvider>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
