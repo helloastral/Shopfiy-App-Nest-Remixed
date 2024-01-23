@@ -1,13 +1,7 @@
-import { useAppBridge } from "@shopify/app-bridge-react";
-import { Redirect } from "@shopify/app-bridge/actions";
 import axios, { AxiosResponseHeaders } from "axios";
 import { useMemo } from "react";
-import { getSessionToken } from "@shopify/app-bridge/utilities";
-import { ClientApplication } from "@shopify/app-bridge";
 
 export function useApi() {
-  const app = useAppBridge();
-
   const api = useMemo(() => {
     const instance = axios.create({
       baseURL: "/api",
@@ -15,7 +9,7 @@ export function useApi() {
 
     // To check if the token is set or wait the request until it's set
     instance.interceptors.request.use(async (config) => {
-      const token = await getSessionToken(app);
+      const token = await shopify.idToken();
 
       config.headers["Authorization"] = `Bearer ${token}`;
       config.headers["X-Requested-With"] = "XMLHttpRequest";
@@ -26,41 +20,36 @@ export function useApi() {
     instance.interceptors.response.use(
       (response) => {
         checkHeadersForReauthorization(
-          response.headers as AxiosResponseHeaders,
-          app
+          response.headers as AxiosResponseHeaders
         );
         return response;
       },
       (error) => {
         if (error.response.headers) {
-          checkHeadersForReauthorization(error.response.headers, app);
+          checkHeadersForReauthorization(error.response.headers);
         }
         return Promise.reject(error);
       }
     );
 
     return instance;
-  }, [app]);
+  }, []);
 
   return { api };
 }
 
-function checkHeadersForReauthorization(
-  headers: AxiosResponseHeaders,
-  app: ClientApplication
-) {
+function checkHeadersForReauthorization(headers: AxiosResponseHeaders) {
   if (headers.get("X-Shopify-API-Request-Failure-Reauthorize") === "1") {
     const authUrlHeader =
       (headers.get(
         "X-Shopify-API-Request-Failure-Reauthorize-Url"
       ) as string) || `/api/auth`;
 
-    const redirect = Redirect.create(app);
-    redirect.dispatch(
-      Redirect.Action.REMOTE,
+    window.open(
       authUrlHeader.startsWith("/")
         ? `https://${window.location.host}${authUrlHeader}`
-        : authUrlHeader
+        : authUrlHeader,
+      "_self"
     );
   }
 }

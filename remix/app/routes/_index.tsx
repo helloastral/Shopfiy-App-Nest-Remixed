@@ -2,6 +2,8 @@ import { LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { Page, BlockStack, Layout, Card, Button } from "@shopify/polaris";
 import { getApi } from "../libs/api.server";
+import { useApi } from "../hooks/useApi";
+import { useEffect } from "react";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const api = await getApi(request);
@@ -15,6 +17,13 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function MainPage() {
   const { products } = useLoaderData<typeof loader>();
+  const { api } = useApi();
+
+  useEffect(() => {
+    api.get("/products").then((res) => {
+      console.log("Products", res.data);
+    });
+  }, []);
 
   return (
     <Page>
