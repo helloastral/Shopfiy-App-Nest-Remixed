@@ -25,7 +25,7 @@ export default function MainPage() {
 
   return (
     <Page>
-      <ui-title-bar title="Remix app template">Generate a product</ui-title-bar>
+      <ui-title-bar title="Remix app template"><button>Generate a product</button></ui-title-bar> 
       <BlockStack gap="500">
         <Layout>
           <Layout.Section>
