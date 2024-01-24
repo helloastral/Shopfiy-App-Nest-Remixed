@@ -11,7 +11,7 @@ export async function getApi(request: LoaderFunctionArgs["request"]) {
   instance.interceptors.request.use(async (config) => {
     const { searchParams } = new URL(request.url);
     const token = searchParams.get("id_token");
-    config.headers["Authorization"] = `Bearers ${token}`;
+    config.headers["Authorization"] = `Bearer ${token}`;
     config.headers["X-Requested-With"] = "XMLHttpRequest";
 
     return config;
