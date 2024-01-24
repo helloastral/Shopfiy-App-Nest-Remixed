@@ -2026,10 +2026,10 @@
   dependencies:
     web-streams-polyfill "^3.1.1"
 
-"@shopify/app-bridge-types@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@shopify/app-bridge-types/-/app-bridge-types-0.0.4.tgz#db086b5a8e2891e77c47f6ced0059b84ea327674"
-  integrity sha512-Gt38jb4Y+OzLpFwmGP5jJs91NskTxDKvFCOFLR2yMg/u883rphQxSgjA7YZNI5FXrdfYvHtUerp4W4li3CLWwQ==
+"@shopify/app-bridge-types@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@shopify/app-bridge-types/-/app-bridge-types-0.0.5.tgz#d56bc608b83267ede94bf84c70da808900194577"
+  integrity sha512-NPHZbP4CJ2od9EQ4jQVmUvfbcLcjJPx+SqD2KxgtULjw0trQ7tLisD+I+KpJM6SUQ++UHFOni+TnR0Wy/yYXnQ==
 
 "@shopify/app@^3.53.0":
   version "3.53.0"
