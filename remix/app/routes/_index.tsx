@@ -10,8 +10,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const host = process.env.HOST;
   const res = await api.get(`${host}/api/products`);
 
-  console.log(res.data);
-
   return { products: res.data };
 }
 

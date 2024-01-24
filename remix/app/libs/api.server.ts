@@ -2,7 +2,6 @@ import axios, { AxiosResponseHeaders } from "axios";
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 
 const host = process.env.HOST;
-const apiSecret = process.env.SELF_API_SECRET;
 
 export async function getApi(request: LoaderFunctionArgs["request"]) {
   const instance = axios.create({
@@ -10,15 +9,10 @@ export async function getApi(request: LoaderFunctionArgs["request"]) {
   });
 
   instance.interceptors.request.use(async (config) => {
-    config.headers["Authorization"] = `Basic ${apiSecret}`;
-    config.headers["X-Requested-With"] = "XMLHttpRequest";
-
     const { searchParams } = new URL(request.url);
-
-    config.params = {
-      shop: searchParams.get("shop"),
-      ...config.params,
-    };
+    const token = searchParams.get("id_token");
+    config.headers["Authorization"] = `Bearers ${token}`;
+    config.headers["X-Requested-With"] = "XMLHttpRequest";
 
     return config;
   });
