@@ -4,6 +4,8 @@ import { shopifyApp } from '@shopify/shopify-app-express'
 import { restResources } from '@shopify/shopify-api/rest/admin/2023-04'
 import { STSessionStorage } from './st-sessions'
 
+const sessionStorage = new STSessionStorage()
+
 const apiConfig = {
   apiKey: process.env.SHOPIFY_API_KEY,
   apiSecretKey: process.env.SHOPIFY_API_SECRET,
@@ -27,9 +29,10 @@ const shopify = shopifyApp({
     // We are going to use nest js to handle this in webhooks.controller.ts
     path: '/api/webhooks',
   },
-  sessionStorage: new STSessionStorage(),
+  sessionStorage,
 })
 
 export default shopify
+export { sessionStorage }
 
 export type ShopifyApp = typeof shopify

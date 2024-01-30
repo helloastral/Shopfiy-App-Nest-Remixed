@@ -3,7 +3,7 @@ import '@shopify/shopify-api/adapters/node'
 import { GraphqlClient } from '@shopify/shopify-api/lib/clients/graphql/graphql_client'
 import { RestClient } from '@shopify/shopify-api/lib/clients/rest/rest_client'
 
-import shopify from 'src/lib/shopify-app'
+import shopify, { sessionStorage } from 'src/lib/shopify-app'
 import { PrismaService } from './prisma.service'
 
 @Injectable()
@@ -28,5 +28,9 @@ export class ShopifyService {
 
   get api() {
     return this.shopifyApp.api
+  }
+
+  get session() {
+    return sessionStorage
   }
 }
