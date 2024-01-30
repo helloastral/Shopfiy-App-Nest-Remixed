@@ -1,4 +1,5 @@
 # Nest Remixed
+
 test
 NestJS starter with Remix frontend. This repo is a yarn workspace with two packages: `server` and `remix`
 
@@ -36,3 +37,7 @@ yarn dev
 ## Assets
 
 Because we use nest to serve remix and both have a concept of assets, We are going to serve assets using our nest js server. But the asset should be placed in `/remix/public/assets` folder.
+
+## Migration
+
+- Replace all `import shopify from 'src/lib/shopify'` with the shared service `shopify.service.ts`
