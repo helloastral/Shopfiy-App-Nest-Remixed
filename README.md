@@ -41,3 +41,4 @@ Because we use nest to serve remix and both have a concept of assets, We are goi
 ## Migration
 
 - Replace all `import shopify from 'src/lib/shopify'` with the shared service `shopify.service.ts`
+- Replace `ShopClient("Session") session` decorator with `ShopSession() session`
