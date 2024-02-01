@@ -1,6 +1,5 @@
 # Nest Remixed
 
-test
 NestJS starter with Remix frontend. This repo is a yarn workspace with two packages: `server` and `remix`
 
 ## Features
